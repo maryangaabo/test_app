@@ -11,7 +11,7 @@ class Concaguratoin extends StatelessWidget {
       body: Column(
         children: [
           SizedBox(
-            height: 290,
+            height: 230,
           ),
           Center(
             child: Container(

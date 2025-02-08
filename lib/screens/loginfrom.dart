@@ -11,18 +11,15 @@ class BankingApp extends StatefulWidget {
 }
 
 class _BankingAppState extends State<BankingApp> {
-  // List of card numbers
   final List<String> cards = ["1234", "5678", "9101", "1121"];
 
-  // Selected card
   String selectedCard = "1234"; // Ensure this matches an item in the list
   int selectedPage = 0;
 
-  // List of pages corresponding to each tab
   final List<Widget> pages = [
-    const BankingApp(), // Current screen (can adjust based on navigation structure)
-    const Witch(), // Replace with actual widget
-    const Profile(), // Replace with actual widget
+    const BankingApp(),
+    const Witch(),
+    const Profile(),
   ];
 
   @override
@@ -171,7 +168,6 @@ class _BankingAppState extends State<BankingApp> {
             context,
             MaterialPageRoute(builder: (context) => pages[index]),
           );
-          
         },
         items: const [
           BottomNavigationBarItem(

@@ -1,175 +1,191 @@
 import 'package:flutter/material.dart';
-import 'package:tets3/screens/addcart.dart';
-import 'package:tets3/screens/concaguratoin.dart';
+import 'package:tets3/screens/withdrow.dart';
 
-class Register extends StatefulWidget {
-  const Register({Key? key}) : super(key: key);
-
+class RegistrationPage extends StatefulWidget {
   @override
-  _RegisterState createState() => _RegisterState();
+  _RegistrationPageState createState() => _RegistrationPageState();
 }
 
-class _RegisterState extends State<Register> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  String? selectedCard = 'EVC Plus'; // Default selection
+class _RegistrationPageState extends State<RegistrationPage> {
+  final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0Xfffd0fbf8),
+      backgroundColor: const Color(0xFFE0F7FA),
       appBar: AppBar(
-        title: const Center(
-          child: Text(
-            'Register',
-            style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-            ),
+        elevation: 0,
+        backgroundColor: const Color(0xFFE0F7FA),
+        centerTitle: true,
+        title: const Text(
+          "Register",
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 219, 240, 250),
-        elevation: 0,
       ),
       body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          color: const Color(0xFFE0F7FA),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 20),
-              TextField(
-                controller: emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Enter your Email:',
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(14)),
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(14)),
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Name",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                controller: passwordController,
-                decoration: const InputDecoration(
-                  labelText: 'Enter your Password:',
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(14)),
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(14)),
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-                ),
-                obscureText: true,
-              ),
-              const SizedBox(height: 20),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.grey),
-                  color: Colors.white,
-                ),
-                child: DropdownButtonFormField<String>(
-                  value: selectedCard,
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                  ),
-                  items: const [
-                    DropdownMenuItem(
-                      value: 'EVC Plus',
-                      child: Row(
-                        children: [
-                          Icon(Icons.credit_card, color: Colors.green),
-                          SizedBox(width: 10),
-                          Text('EVC Plus'),
-                        ],
-                      ),
+                const SizedBox(height: 8),
+                TextFormField(
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    hintText: "Enter your name",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    DropdownMenuItem(
-                      value: 'Master Card',
-                      child: Row(
-                        children: [
-                          Icon(Icons.credit_card, color: Colors.blue),
-                          SizedBox(width: 10),
-                          Text('Master Card'),
-                        ],
-                      ),
-                    ),
-                  ],
-                  onChanged: (value) {
-                    setState(() {
-                      selectedCard = value;
-                    });
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Name is required.";
+                    }
+                    return null;
                   },
                 ),
-              ),
-              const SizedBox(height: 20),
-              if (selectedCard == 'EVC Plus')
-                TextField(
-                  controller: phoneController,
-                  decoration: const InputDecoration(
-                    labelText: 'Enter your Phone Number (+252):',
-                    prefixText: '+252 ',
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(14)),
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(14)),
-                      borderSide: BorderSide(color: Colors.grey),
+                const SizedBox(height: 16),
+                const Text(
+                  "Email",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                TextFormField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    hintText: "Enter your email",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  keyboardType: TextInputType.phone,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Email is required.";
+                    }
+                    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                      return "Enter a valid email.";
+                    }
+                    return null;
+                  },
                 ),
-              const SizedBox(height: 30),
-              ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AddCardPage()));
-                },
-                icon: const Icon(Icons.add),
-                label: const Text(
-                  'ADD NEW',
-                  style: TextStyle(fontSize: 20),
+                const SizedBox(height: 16),
+                const Text(
+                  "Password",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-                style: ElevatedButton.styleFrom(
-                  elevation: 2,
-                  backgroundColor: const Color(0Xfff6b3e0),
-                  foregroundColor: Colors.black,
-                  shape: BeveledRectangleBorder(
-                      borderRadius: BorderRadius.circular(5)),
-                  minimumSize: const Size(double.infinity, 45),
+                const SizedBox(height: 8),
+                TextFormField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    hintText: "Enter your password",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  obscureText: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Password is required.";
+                    }
+                    if (value.length < 8) {
+                      return "Password must be at least 8 characters.";
+                    }
+                    return null;
+                  },
                 ),
-              ),
-              const SizedBox(height: 160),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Concaguratoin()));
-                },
-                child: const Text(
-                  'Register \$3',
-                  style: TextStyle(fontSize: 23),
+                const SizedBox(height: 16),
+                const Text(
+                  "Confirm Password",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-                style: ElevatedButton.styleFrom(
-                  elevation: 2,
-                  backgroundColor: const Color(0Xfff6b3e0),
-                  foregroundColor: Colors.black,
-                  shape: BeveledRectangleBorder(
-                      borderRadius: BorderRadius.circular(5)),
-                  minimumSize: const Size(double.infinity, 45),
+                const SizedBox(height: 8),
+                TextFormField(
+                  controller: _confirmPasswordController,
+                  decoration: InputDecoration(
+                    hintText: "Re-enter your password",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  obscureText: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please confirm your password.";
+                    }
+                    if (value != _passwordController.text) {
+                      return "Passwords do not match.";
+                    }
+                    return null;
+                  },
                 ),
-              ),
-            ],
+                const SizedBox(height: 24),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      // Perform registration action
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Registration Successful!"),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Withdrow()));
+                    }
+                  },
+                  child: const Text(
+                    "LOGIN ",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0Xfff6b3e0),
+                    foregroundColor: Colors.black,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    minimumSize: const Size(double.infinity, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Already have an account?"),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text("Login"),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
